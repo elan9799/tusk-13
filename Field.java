@@ -1,8 +1,3 @@
-import org.w3c.dom.events.EventException;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Field {
     FildPositions [][] field;
 

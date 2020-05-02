@@ -16,7 +16,7 @@ public class Player {
         field.setPosition(x, y, FieldPositions);
     }
 
-    public Boolean currentPlayer() {
+    public Boolean currentPlayer(int turn) {
         field.showField();
 
         if (field.checkOnWin() == FildPositions.Cross) {
@@ -24,6 +24,9 @@ public class Player {
             return true;
         } else if (field.checkOnWin() == FildPositions.Zero) {
             System.out.println(" Zero Wins ");
+            return true;
+        } else if (turn == 10){
+            System.out.println(" Nobody Wins ");
             return true;
         }
 
