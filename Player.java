@@ -19,14 +19,21 @@ public class Player {
     public Boolean currentPlayer(int turn) {
         field.showField();
 
+
         if (field.checkOnWin() == FildPositions.Cross) {
-            System.out.println(" Cross Wins ");
+            if (!field.checkSameArrInBase(FildPositions.Cross)) {
+                field.Write(FildPositions.Cross);
+            }
+            System.out.println("Cross Wins ");
             return true;
         } else if (field.checkOnWin() == FildPositions.Zero) {
-            System.out.println(" Zero Wins ");
+            if (!field.checkSameArrInBase(FildPositions.Zero)) {
+                field.Write(FildPositions.Zero);
+            }
+            System.out.println("Zero Wins ");
             return true;
         } else if (turn == 10){
-            System.out.println(" Nobody Wins ");
+            System.out.println("Nobody Wins ");
             return true;
         }
 
@@ -40,4 +47,6 @@ public class Player {
         }
         return false;
     }
+
+
 }
