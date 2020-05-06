@@ -1,10 +1,7 @@
 import com.sun.source.tree.IfTree;
 import com.sun.source.tree.WhileLoopTree;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.IntBuffer;
 import java.util.*;
 
@@ -35,6 +32,7 @@ public class Field {
             System.out.println();
         }
     }
+
     public void setPosition (int x, int y, FildPositions fildPositions) throws Exception{
         if (field[x - 1][y - 1].equals(FildPositions.Emptyspace)){
             field[x - 1][y - 1] = fildPositions;
@@ -61,7 +59,6 @@ public class Field {
                         arr2.add(Integer.parseInt(String.valueOf(strTemp[i])));
                     }
                     if (arr.equals(arr2)){
-                        System.out.println("eq");
                         return true;
                     }
                 }else if (str.equals("C W") && fildPositions.equals(FildPositions.Cross)) {
@@ -73,7 +70,6 @@ public class Field {
                     }
 
                     if (arr.equals(arr2)) {
-                        System.out.println("eq");
                         return true;
                     }
                 }
@@ -87,21 +83,152 @@ public class Field {
     }
 
     public void WriteInArr(int x, int y){
+
         arr.add(x);
         arr.add(y);
-
     }
-    public void Write (FildPositions FieldPositions){
+    public void Write (FildPositions FieldPositions, int rep){
         try (FileWriter writer = new FileWriter("src/memo.txt", true)){
             writer.write(FieldPositions.toString().charAt(0) + " W" + "\n");
             for (int i = 0; i < arr.size(); i++) {
                     writer.write(new Integer(arr.get(i)).toString());
                     writer.write(" ");
                 }
+            String RE = Integer.toString(rep);
+            writer.write("\n");
+            writer.write("R" + "\n" + RE);
             writer.write("\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void WriteIfSameInBase(FildPositions fildPositions, int rep){
+        List<String> allBase = new ArrayList<>();
+
+        try {
+            Scanner sc = new Scanner(new File("src/memo.txt"));
+
+            while (sc.hasNext()) {
+                String str = sc.nextLine();
+                if (str.equals("")){
+                }else {
+                    allBase.add(str);
+                }
+            }
+            }catch(FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Scanner sc = new Scanner(new File("src/memo.txt"));
+            while (sc.hasNext()){
+                String str = sc.nextLine();
+                if (str.equals("Z W") && fildPositions.equals(FildPositions.Zero)){
+                    List<Integer> arr2 = new ArrayList<>();
+                    str = sc.nextLine();
+                    String[] strTemp = str.split(" ");
+                    for (int i = 0; i < strTemp.length; i++) {
+                        arr2.add(Integer.parseInt(String.valueOf(strTemp[i])));
+                    }
+                    if (arr.equals(arr2)) {
+                        String arrIntoStr = "";
+                        for (int i = 0; i < arr2.size(); i++) {
+                            arrIntoStr = arrIntoStr + arr2.get(i);
+                            arrIntoStr = arrIntoStr + " ";
+                        }
+                        int counter = allBase.indexOf(arrIntoStr) + 2;
+                        String temp = allBase.get(counter);
+                        int R = Integer.parseInt(temp) + rep;
+                        allBase.set(counter, String.valueOf(R));
+
+                        try (PrintWriter writer = new PrintWriter("src/memo.txt")){
+                            for (int i = 0; i < allBase.size(); i++) {
+                                writer.write(allBase.get(i));
+                                writer.write("\n");
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                }else if (str.equals("C W") && fildPositions.equals(FildPositions.Cross)) {
+                    List<Integer> arr2 = new ArrayList<>();
+                    str = sc.nextLine();
+                    String[] strTemp = str.split(" ");
+                    for (int i = 0; i < strTemp.length; i++) {
+                        arr2.add(Integer.parseInt(String.valueOf(strTemp[i])));
+                    }
+
+                    if (arr.equals(arr2)) {
+                        String arrIntoStr = "";
+                        for (int i = 0; i < arr2.size(); i++) {
+                            arrIntoStr = arrIntoStr + arr2.get(i);
+                            arrIntoStr = arrIntoStr + " ";
+                        }
+                        int counter = allBase.indexOf(arrIntoStr) + 2;
+                        String temp = allBase.get(counter);
+                        int R = Integer.parseInt(temp) + rep;
+                        allBase.set(counter, String.valueOf(R));
+
+                        try (PrintWriter writer = new PrintWriter("src/memo.txt")){
+                            for (int i = 0; i < allBase.size(); i++) {
+                                writer.write(allBase.get(i));
+                                writer.write("\n");
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
+//        try {
+//            Scanner sc = new Scanner(new File("src/memo.txt"));
+//            while (sc.hasNext()){
+//                counter++;
+//                String str = sc.nextLine();
+//                if (str.equals("Z W") && fildPositions.equals(FildPositions.Zero)){
+//                    List<Integer> arr2 = new ArrayList<>();
+//                    str = sc.nextLine();
+//                    String[] strTemp = str.split(" ");
+//                    for (int i = 0; i < strTemp.length; i++) {
+//                        arr2.add(Integer.parseInt(String.valueOf(strTemp[i])));
+//                    }
+//                    if (arr.equals(arr2)){
+//                        String temp = allBase.get(counter);
+//                        int R = Integer.parseInt(temp);
+//                        R = R + rep;
+//                        allBase.set(counter, String.valueOf(R));
+//                    }
+//                }else if (str.equals("C W") && fildPositions.equals(FildPositions.Cross)) {
+//                    List<Integer> arr2 = new ArrayList<>();
+//                    str = sc.nextLine();
+//                    String[] strTemp = str.split(" ");
+//                    for (int i = 0; i < strTemp.length; i++) {
+//                        arr2.add(Integer.parseInt(String.valueOf(strTemp[i])));
+//                    }
+//                    if (arr.equals(arr2)){
+//                        String temp = allBase.get(counter);
+//                        int R = Integer.parseInt(temp);
+//                        R = R + rep;
+//                        allBase.set(counter, String.valueOf(R));
+//                    }
+//                }
+//
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+
 
     }
 
@@ -131,6 +258,8 @@ public class Field {
         if (fildPositions.equals(FildPositions.Zero)) {
             try {
                 Scanner sc = new Scanner(new File("src/memo.txt"));
+                List<Integer> prefWinStrat = new ArrayList<>();
+                int repPrev = 0;
 
                 while (sc.hasNext()) {
                     String str = sc.nextLine();
@@ -149,10 +278,21 @@ public class Field {
                                 }
                             }
                         }
-                        if  (counter == arr.size()) {
+
+                        while (!str.equals("R")){
+                            str = sc.nextLine();
+                        }
+                        int repCur = str.charAt(0);
+
+                        if  (counter == arr.size() && repCur > repPrev) {
+                            prefWinStrat = arr2;
+                            repPrev = repCur;
+                        }
+
+                        if (!sc.hasNext() && repPrev > -6){
                             int[] nextMove = new int[2];
-                            nextMove[0] = arr2.get(arr.size() );
-                            nextMove[1] = arr2.get(arr.size() + 1);
+                            nextMove[0] = prefWinStrat.get(arr.size() );
+                            nextMove[1] = prefWinStrat.get(arr.size() + 1);
                             return nextMove;
                         }
                     }
@@ -163,6 +303,8 @@ public class Field {
         } else if (fildPositions.equals(FildPositions.Cross)) {
             try {
                 Scanner sc = new Scanner(new File("src/memo.txt"));
+                List<Integer> prefWinStrat = new ArrayList<>();
+                int repPrev = 0;
 
                 while (sc.hasNext()) {
                     String str = sc.nextLine();
@@ -176,15 +318,26 @@ public class Field {
                         int counter = 0;
                         if (arr.size() != 0 && arr2.size() > arr.size()) {
                             for (int i = 0; i < arr.size(); i++) {
-                                    if (arr.get(i) == arr2.get(i)) {
-                                        counter++;
-                                    }
+                                if (arr.get(i) == arr2.get(i)) {
+                                    counter++;
+                                }
                             }
                         }
-                        if  (counter == arr.size()) {
+
+                        while (!str.equals("R")){
+                            str = sc.nextLine();
+                        }
+                        int repCur = str.charAt(0);
+
+                        if  (counter == arr.size() && repCur > repPrev) {
+                            prefWinStrat = arr2;
+                            repPrev = repCur;
+                        }
+
+                        if (!sc.hasNext() && repPrev > 0){
                             int[] nextMove = new int[2];
-                            nextMove[0] = arr2.get(arr.size() );
-                            nextMove[1] = arr2.get(arr.size() + 1);
+                            nextMove[0] = prefWinStrat.get(arr.size() );
+                            nextMove[1] = prefWinStrat.get(arr.size() + 1);
                             return nextMove;
                         }
                     }

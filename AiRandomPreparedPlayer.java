@@ -14,11 +14,6 @@ public class AiRandomPreparedPlayer extends Player {
             x = (int) (Math.random() * 3 + 1);
             y = (int) (Math.random() * 3 + 1);
         }
-        int r = (int) Math.random() * 100;
-        if ( r >= 85){
-            x = (int) (Math.random() * 3 + 1);
-            y = (int) (Math.random() * 3 + 1);
-        }
         field.setPosition(x, y, FieldPositions);
     }
 
