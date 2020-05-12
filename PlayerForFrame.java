@@ -1,43 +1,9 @@
-import java.util.Scanner;
+public class PlayerForFrame extends Player{
 
-public class Player extends PL{
-    FildPositions FieldPositions;
-    Field field;
-
-    final int REP_MINUS = -4;
-    final int REP_PLUS = 9;
-
-    public Player(FildPositions humanFieldPositions, Field field) {
-        this.FieldPositions = humanFieldPositions;
-        this.field = field;
+    public PlayerForFrame(FildPositions humanFieldPositions, Field field) {
+        super(humanFieldPositions, field);
     }
 
-    @Override
-    public void  putMark() throws Exception {
-        Scanner sc = new Scanner(System.in);
-        int x = sc.nextInt();
-        int y = sc.nextInt();
-        field.setPosition(x, y, FieldPositions);
-    }
-
-    @Override
-    public void putMark(int x, int y) throws Exception {
-        field.setPosition(x + 1, y + 1, FieldPositions);
-    }
-
-    @Override
-    public void currentPlayer() {
-        while (true) {
-            System.out.println(FieldPositions + " make a move");
-            try {
-                putMark();
-                break;
-            } catch (Exception exception) {
-            }
-        }
-    }
-
-    //
     public FildPositions testOnWin (int turn){
         if (field.checkOnWin() == FildPositions.Cross) {
             if (!field.checkSameArrInBase(FildPositions.Cross)) {
@@ -67,16 +33,6 @@ public class Player extends PL{
         }
         return null;
     }
-    @Override
-    public void currentPlayer(int x, int y) {
-        while (true) {
-            System.out.println(FieldPositions + " make a move");
-            try {
-                putMark(x,y);
-                break;
-            } catch (Exception exception) {
-            }
-        }
-    }
+
 
 }

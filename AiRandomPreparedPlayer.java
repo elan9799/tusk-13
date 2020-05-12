@@ -1,9 +1,10 @@
+import java.text.FieldPosition;
+
 public class AiRandomPreparedPlayer extends Player {
 
     public AiRandomPreparedPlayer(FildPositions FieldPositions, Field field) {
         super(FieldPositions, field);
     }
-
 
     @Override
     public void putMark() throws Exception {
@@ -16,5 +17,4 @@ public class AiRandomPreparedPlayer extends Player {
         }
         field.setPosition(x, y, FieldPositions);
     }
-
 }
